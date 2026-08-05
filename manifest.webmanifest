@@ -1,0 +1,17 @@
+{
+  "name": "J-OSLER 症例管理",
+  "short_name": "J-OSLER",
+  "description": "Googleログインとクラウド同期に対応したJ-OSLER症例管理アプリ",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#111827",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isApprovedOwner(userId) {
+      return request.auth != null
+        && request.auth.uid == userId
+        && request.auth.token.email_verified == true
+        && request.auth.token.email == 'REPLACE_WITH_YOUR_GOOGLE_EMAIL';
+    }
+
+    match /users/{userId}/apps/joslerCaseManager {
+      allow read: if isApprovedOwner(userId);
+      allow create, update: if isApprovedOwner(userId)
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.format == 'josler-case-manager-cloud'
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.state.cases.size() <= 500;
+      allow delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
